@@ -6,11 +6,12 @@
 ### Download Dataset TNL2K-LT
 * **Baiduyun Drive:**
 ```
-链接: https://pan.baidu.com/s/1XzNBUrwMaWKlrX3SqvKVEA?pwd=AHUT 提取码: AHUT 
+
 ```
 
 * **Dropbox**: 
 ```
+  https://www.dropbox.com/scl/fo/4l3imwjldllr341ryey6w/AFUxOtFtscQ4fFTbu8t5OaI?rlkey=smdmz6wky9j2rytwukrftfaiz&st=cgg34it4&dl=0
 ```
 
 
