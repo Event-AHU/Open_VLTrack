@@ -12,7 +12,7 @@ Code: 1d6b
 1. cat TNL2KLT_part_* > TNL2KLT_restored.tar.gz
 2. gunzip TNL2KLT_restored.tar.gz
 3. md5sum -c TNL2KLT.tar.gz.md5
-4. tar -xvf archive_restored.tar
+4. tar -xvf TNL2KLT_restored.tar
 
 * **Dropbox**: 
 ```
