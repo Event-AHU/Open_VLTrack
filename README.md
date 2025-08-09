@@ -12,8 +12,8 @@ URL: https://pan.baidu.com/s/1Bsr3PENWaa9k_yCNpkUh_Q?pwd=1d6b
 Code: 1d6b 
 
 Example Sequence：
-URL: https://pan.baidu.com/s/10ZkIUcm9Fg77oap08nCS1g?pwd=ew9p 
-Code: ew9p 
+URL: https://pan.baidu.com/s/1onjHTESlh-V1vgR2AYgnLw?pwd=ed76
+Code: ed76 
 ```
 1. cat TNL2KLT_part_* > TNL2KLT_restored.tar.gz
 2. gunzip TNL2KLT_restored.tar.gz
