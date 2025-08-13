@@ -36,7 +36,7 @@ To be released
 4. tar -xvf TNLLT_restored.tar
 ```
 
-## Tutorial for the Evaluaton Toolkit: 
+## Tutorial for the Evaluation Toolkit: 
 1. Download this github file: 
 ```bash
 git clone https://github.com/Event-AHU/Open_VLTrack.git
