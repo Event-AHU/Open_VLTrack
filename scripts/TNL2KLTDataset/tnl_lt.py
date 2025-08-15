@@ -1,11 +1,3 @@
-'''
-Author: jinliye jinliye@stu.ahu.edu.cn
-Description: no descriptions
-Date: 2024-11-30 10:07:32
-LastEditors: jinliye
-LastEditTime: 2024-12-27 19:49:20
-'''
-
 import os
 import os.path
 import torch
@@ -19,7 +11,7 @@ from lib.train.data import jpeg4py_loader,opencv_loader
 from lib.train.admin import env_settings
 
 class TNLLT(BaseVideoDataset):
-    # TODO：image_loader可能要换一个，tnllt数据集中的图片是*.png
+
     def __init__(self, root=None, image_loader=opencv_loader, split="train", data_fraction=None):
         """
         args:
@@ -80,13 +72,13 @@ class TNLLT(BaseVideoDataset):
     def read_absent_label(self,seq_path):
         abs_label_file = os.path.join(seq_path, "absent_label.txt")
         absent_label = pandas.read_csv(abs_label_file, delimiter=',', header=None, dtype=np.int32, na_filter=False, low_memory=False).values
-        # 移除所有维度为1的维度
+
         return torch.tensor(absent_label).squeeze()
     
     def read_attributes(self,seq_path):
         attributes_file = os.path.join(seq_path, "attributes.txt")
         attributes_label = pandas.read_csv(attributes_file, delimiter=',', header=None, dtype=np.int32, na_filter=False, low_memory=False).values
-        # 移除所有维度为1的维度
+
         return torch.tensor(attributes_label).squeeze()
 
     def get_nlp(self,seq_id):
@@ -119,7 +111,6 @@ class TNLLT(BaseVideoDataset):
         attributes_label = self.read_attributes(seq_path)
         lan = self.get_nlp(seq_id)
 
-        # 检查宽高是否都大于0
         valid = (bbox[:, 2] > 0) & (bbox[:, 3] > 0)
         # visible = self._read_target_visible(seq_path) & valid.byte()
         visible = self._read_target_visible(seq_path)
@@ -129,7 +120,6 @@ class TNLLT(BaseVideoDataset):
     def get_name(self):
         return 'tnllt'
 
-    # TODO: 下面几个短的函数考证一下，默认has_class_info为false
     def has_class_info(self):
         return False
 
@@ -147,7 +137,6 @@ class TNLLT(BaseVideoDataset):
     
 
     
-    # TODO 确定一下数据集的解压格式  
     def get_frames(self, seq_id, frame_ids, anno=None):
         """ Get a set of frames from a particular sequence
 

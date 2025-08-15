@@ -52,7 +52,7 @@ class TNLLTDataset(BaseDataset):
         return len(self.sequence_list)
     
     def _get_sequence_list(self):
-        with open('/wangx/DATA/Code/jinliye/ODTrack/lib/train/data_specs/tnl_lt_test_split.txt', 'r') as file:
+        with open('/your_root_path/tnl_lt_test_split.txt', 'r') as file:
             sequence_list = [line.strip() for line in file.readlines()]
 
         return sequence_list
