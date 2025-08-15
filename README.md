@@ -69,7 +69,31 @@ run_tracker_performance_evaluation.m
 5. Wait and see final results: 
 ![fig-1](./figures/SRPRNPR.png)
 
+## Tutorial for the Supervised Fine-Tuning
+
+- Clone the repository and install the dependencies: 
+```bash
+git clone --depth 1 https://github.com/hiyouga/LLaMA-Factory.git
+cd LLaMA-Factory
+pip install -e ".[torch,metrics]" --no-build-isolation
+```
+
+- Prepare the SFT dataset: 
+```
+SFT Dataset:
+URL: https://pan.baidu.com/s/126Gn8R629OC1UVstSIkQDA?pwd=6arr
+Code: 6arr
+```
+- Download the dataset and unzip it into the `/your_root_path` path.
+- Put [[ReasoningData](https://github.com/Event-AHU/Open_VLTrack/tree/main/ReasoningTrack/Supervise%20fine-tuning)] into `LLaMA_Factory/data`
+- use [[script](https://github.com/Event-AHU/Open_VLTrack/blob/main/scripts/SFT/transforme_json.py)] to transforme images' path in [[ReasoningData](https://github.com/Event-AHU/Open_VLTrack/tree/main/ReasoningTrack/Supervise%20fine-tuning)]
+- The reference configuration during the training process is as follows [[training_args]()].
+
 
 ## Acknowledgement
-This evaluation_toolkit code is modified based on the evaluation toolkit of [[LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)]. 
+- This evaluation_toolkit code is modified based on the evaluation toolkit of [[LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)]. 
+- This work is built upon the [[LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory)] and [[EasyR1](https://github.com/hiyouga/EasyR1)].
+- This work utilizes models from [[Qwen2.5-VL](https://github.com/QwenLM/Qwen2.5-VL)] and [[DUTrack](https://github.com/GXNU-ZhongLab/DUTrack)].
+
+
 
