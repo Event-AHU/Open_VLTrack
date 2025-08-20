@@ -87,8 +87,9 @@ Code: 6arr
 - Download the dataset and unzip it into the `/your_root_path` path.
 - Put [[ReasoningData](https://github.com/Event-AHU/Open_VLTrack/tree/main/ReasoningTrack/Supervise%20fine-tuning)] into `LLaMA_Factory/data`
 - use [[script](https://github.com/Event-AHU/Open_VLTrack/blob/main/scripts/SFT/transforme_json.py)] to transforme images' path in [[ReasoningData](https://github.com/Event-AHU/Open_VLTrack/tree/main/ReasoningTrack/Supervise%20fine-tuning)]
-- The reference configuration during the training process is as follows [[training_args]()].
+- The reference configuration during the training process is as follows [[training_args](https://github.com/Event-AHU/Open_VLTrack/blob/main/ReasoningTrack/Supervise%20fine-tuning/training_args.yaml)].
 
+## Tutorial for the Reinforcement Learning
 
 ## Acknowledgement
 - This evaluation_toolkit code is modified based on the evaluation toolkit of [[LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)]. 
