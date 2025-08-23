@@ -90,6 +90,12 @@ Code: 6arr
 - The reference configuration during the training process is as follows [[training_args](https://github.com/Event-AHU/Open_VLTrack/blob/main/ReasoningTrack/Supervise%20fine-tuning/training_args.yaml)].
 
 ## Tutorial for the Reinforcement Learning
+### Installation
+- Please refer to the official [[EasyR1 repo](https://github.com/hiyouga/EasyR1)] for RL env configuration guidelines.
+- Then refer to the official [[DUTrack repo](https://github.com/GXNU-ZhongLab/DUTrack)] for Tracking env configuration guidelines.
+- You may also refer to our environment configuration in [[environment.yml](https://github.com/Event-AHU/Open_VLTrack/blob/main/ReasoningTrack/Reinforcement%20Learning/environment.yml)]
+
+### Pre-execution checklist
 
 ## Acknowledgement
 - This evaluation_toolkit code is modified based on the evaluation toolkit of [[LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)]. 
