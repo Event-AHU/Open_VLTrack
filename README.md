@@ -96,6 +96,34 @@ Code: 6arr
 - You may also refer to our environment configuration in [[environment.yml](https://github.com/Event-AHU/Open_VLTrack/blob/main/ReasoningTrack/Reinforcement%20Learning/environment.yml)]
 
 ### Pre-execution checklist
+- First, refer to the official [[DUTrack repo](https://github.com/GXNU-ZhongLab/DUTrack)] to ensure that the testing process runs correctly.
+- Next, move demo3.py to the root directory of DUTrack, ensuring that the two functions within it can run correctly (these functions are used to calculate rewards in reinforcement learning(it can be found under ReasoningTrack/Reinforcement Learning/examples/reward_function/track.py line 107)). 
+
+### GRPO Training
+```bash
+bash run_full.sh
+```
+
+### Merge Checkpoint
+```bash
+python3 scripts/model_merger.py --local_dir your_checkpoint_path/global_step_1/actor
+```
+
+> [TIP]
+> If you encounter issues with connecting to Hugging Face, consider using `export HF_ENDPOINT=https://hf-mirror.com`.
+
+## Evaluation
+### Use vllm for inference
+```bash
+bash startvllm.sh
+```
+> change the parameters in startvllm.sh to your own path.
+
+### Embed large models in text updates
+
+
+### Some testing examples
+
 
 ## Acknowledgement
 - This evaluation_toolkit code is modified based on the evaluation toolkit of [[LaSOT](https://github.com/HengLan/LaSOT_Evaluation_Toolkit)]. 
