@@ -119,10 +119,25 @@ bash startvllm.sh
 ```
 > change the parameters in startvllm.sh to your own path.
 
-### Embed large models in text updates
+### Tutorial for embed large language models in tracking process
 
+1. Firstly, we modify the i2d.py file under DUTrack/lib/models/dutrack/i2d.py to support the text generation by Qwen2.5-VL. (The modified code can be found under ReasoningTrack/Evaluation/i2d.py and you should modify it based on your vllm service.)
+2. Then, we modify dutrack.py under DUTrack/lib/test/tracker/dutrack.py to call descriptgenRefiner function. (The key point of modification lies in obtaining the correct image path during the tracking process; you may refer to our implementation located in the ReasoningTrack/Evaluation/dutrack.py.)
+3. If you wish to apply it to other tracking frameworks, the modifications are similar.
+---
 
 ### Some testing examples
+- TNLLT and TNL2k datasets evaluated refer to the official implementation[[TNLLT](https://github.com/Event-AHU/Open_VLTrack)][[TNL2k](https://github.com/wangxiao5791509/TNL2K_evaluation_toolkit)].
+- GOT10k-test
+    ```bash
+    python tracking/test.py dutrack dutrack_256_full --dataset got10k_test --threads 16 --num_gpus 2
+    python lib/test/utils/transform_got10k.py --tracker_name dutrack --cfg_name dutrack_256_full
+    ```
+- OTB99
+    ```bash
+    python tracking/test.py dutrack dutrack_256_full --dataset otb_lang --threads 1 --num_gpus 1
+    python tracking/analysis_results.py # need to modify tracker configs and names
+    ```
 
 
 ## Acknowledgement
