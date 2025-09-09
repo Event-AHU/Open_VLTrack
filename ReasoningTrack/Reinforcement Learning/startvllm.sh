@@ -1,4 +1,4 @@
-CUDA_VISIBLE_DEVICES=2 vllm serve /wangx_nas/JLY/Code/LongTimeTracking/RLModels/easyr1/TNLLT_ioubf16/global_step_25/actor/huggingface \
+CUDA_VISIBLE_DEVICES=2 vllm serve /wangx_nas/JLY/Code/LongTimeTracking/RLModels/easyr1/TNLLT_ioubf16/global_step_90/actor/huggingface \
   --port 8000 \
   --host 0.0.0.0 \
   --dtype bfloat16 \

@@ -114,10 +114,21 @@ python3 scripts/model_merger.py --local_dir your_checkpoint_path/global_step_1/a
 
 ## Evaluation
 ### Use vllm for inference
+You can access our two-stage training model from Baidu Cloud.[[SFT_stage (word:434y)](https://pan.baidu.com/s/1gHjFkhOnfPmBXm_xPcuSPA?pwd=434y)][[RL_stage (word:xt79)](https://pan.baidu.com/s/1YPYR_PktegnxKlWM9LZnOg?pwd=xt79)]
 ```bash
 bash startvllm.sh
 ```
 > change the parameters in startvllm.sh to your own path.
+
+After starting the vllm service, you can run ReasoningTrack/Evaluation/i2d.py to test whether the service is functioning correctly (Note: change the input path for the images in i2d.py according to the actual situation; test images are provided in Evaluation/sample001).
+
+The output should be like:
+```bash
+descript: a ship
+tag: ['no']
+think: ['Okay, let\'s see. The initial text is "a ship". I need to check if this needs updating based on the two frames provided.\n\nLooking at Frame 1: There\'s a red ship with a green flag sailing on water. The background has cliffs and some structures in the distance. The sun is shining, creating a bright and open feel. The ship is moving towards the right side of the frame.\n\nNow, Frame 2: The same ship is still present, but the camera angle seems slightly different. Maybe it\'s zoomed in or shifted a bit. The position relative to the background elements like the cliffs and structures has changed slightly. The lighting might be a bit different due to the angle, but the overall scene is similar. The ship\'s orientation appears to have adjusted slightly, perhaps leaning forward or turning.\n\nComparing both frames, the main subject (the ship) hasn\'t changed much in terms of appearance—still red with green sails. The background elements are consistent, just in different positions. Since the core object (the ship) remains the same, the description doesn\'t need an update. The changes are minor positional adjustments and possible lighting differences, which don\'t fundamentally alter the object\'s identity or characteristics.']
+ans: ['a ship']
+```
 
 ### Tutorial for embed large language models in tracking process
 

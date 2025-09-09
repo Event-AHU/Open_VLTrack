@@ -14,7 +14,7 @@ from openai import OpenAI
 
 # Set OpenAI's API key and API base to use vLLM's API server.
 openai_api_key = "EMPTY"
-openai_api_base = "http://localhost:8001/v1"
+openai_api_base = "http://localhost:8000/v1"
 
 import base64
 import requests
@@ -149,11 +149,16 @@ class descriptgenRefiner(nn.Module):
 if __name__=='__main__':
     
     model = descriptgenRefiner("","")
-    img1 = "/rydata/jinliye/RL/vltracking/EasyR1/LongTimeTracking/data/sampled_data2/sample0001/img1.jpg"
-    img2 = "/rydata/jinliye/RL/vltracking/EasyR1/LongTimeTracking/data/sampled_data2/sample0001/img2.jpg"
+    img1 = "/sample0001/img1.jpg"
+    img2 = "/sample0001/img2.jpg"
     lan = "a ship"
     model.forward(img1,img2,lan)
     # breakpoint()
+    a,b,c,d = model.forward(img1,img2,lan)
+    print("descript:",a)
+    print("tag:",b)
+    print("think:",c)
+    print("ans:",d)
 
 
 # class descriptgenRefiner(nn.Module):
