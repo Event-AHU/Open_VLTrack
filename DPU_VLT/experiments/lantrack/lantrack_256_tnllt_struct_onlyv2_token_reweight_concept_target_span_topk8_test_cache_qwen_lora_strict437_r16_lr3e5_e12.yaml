@@ -1,0 +1,193 @@
+DATA:
+  TNLLT:
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/tnllt_train_parsed_text_v2.json
+    QWEN_CACHE_ENABLE: true
+    QWEN_CACHE_PATH: /rydata/jinliye/LanTracking/tools/qwen_refine_cache/tnllt_qwen_refine_train_full.json
+    QWEN_CACHE_USE_PROB: 1.0
+    QWEN_CACHE_MAX_GAP: 50
+    QWEN_CACHE_DEBUG: true
+    QWEN_CACHE_DEBUG_INTERVAL: 200
+  MAX_SAMPLE_INTERVAL: 200
+  MEAN:
+  - 0.485
+  - 0.456
+  - 0.406
+  SEARCH:
+    CENTER_JITTER: 3.5
+    FACTOR: 4.0
+    NUMBER: 2
+    SCALE_JITTER: 0.5
+    SIZE: 256
+  STD:
+  - 0.229
+  - 0.224
+  - 0.225
+  TEMPLATE:
+    CENTER_JITTER: 0
+    FACTOR: 2.0
+    NUMBER: 3
+    SCALE_JITTER: 0
+    SIZE: 128
+  TRAIN:
+    DATASETS_NAME:
+      - TNLLT
+    DATASETS_RATIO:
+      - 1
+    SAMPLE_PER_EPOCH: 30000
+  VAL:
+    DATASETS_NAME:
+      - TNLLT
+    DATASETS_RATIO:
+      - 1
+    SAMPLE_PER_EPOCH: 6000
+MODEL:
+  BACKBONE:
+    ADD_CLS_TOKEN: true
+    ATTN_TYPE: concat
+    CE_KEEP_RATIO:
+    - 0.7
+    - 0.7
+    - 0.7
+    CE_LOC:
+    - 3
+    - 6
+    - 9
+    CE_TEMPLATE_RANGE: CTR_POINT
+    STRIDE: 16
+    TOP_K: 3
+    TYPE: itpn_base
+    BERT_DIR: '/rydata/jinliye/LanTracking/pretrained/bert'
+    BLIP_DIR: '/rydata/jinliye/LanTracking/pretrained/blip-image-captioning-base'
+  CAC:
+    ENABLE: false
+    APPLY_LAST_N: 0
+    LAYER_POLICY: first
+    APPLY_N: 1
+    LAMBDA: 0.5
+    QUERY: temporal
+    KEY: search
+    DELTA_CLAMP_MIN: 0.0
+    DETACH_PROTO: true
+    LANG_ENABLE: false
+    LANG_DETACH_VEC: false
+    LANG_WEIGHT_ACT: relu
+    LANG_TAU: 0.07
+    DEBUG: false
+    TEXT_MODE: raw_parsed
+    TEXT_FUSION_MODE: token_concat
+    MAX_TOTAL_TEXT_LEN: 32
+    PARSED_FIELDS: [target, concepts, background]
+    PARSED_JOIN: sep
+    PARSED_WEIGHT:
+      target: 1.0
+      concepts: 0.7
+      background: 0.3
+    RESIDUAL_ENABLE: false
+    RESIDUAL_WEIGHT: 1.0
+    DP_PARSER_CKPT: /rydata/jinliye/LanTracking/DPModel2/ckpt/best_model_epoch_273_uas_0.8729_las_0.8521.pth
+    DP_CACHE_DIR: /rydata/jinliye/treeTrack/Dependency Parser/dataset
+    PARSED_USE_SPACY: true
+    PARSED_SPACY_MODEL: en_core_web_sm
+    DP_EMBED_DIM: 300
+    DP_HIDDEN_DIM: 256
+    DP_LSTM_LAYERS: 3
+    DP_FFNN_DIM: 256
+    DP_DEVICE: cuda:0
+    PROTO_TARGET_WEIGHT: 0.0
+    PROTO_CONCEPT_WEIGHT: 0.0
+    PROTO_BG_WEIGHT: 0.0
+  TEXT_REFINE:
+    ENABLE: true
+    MODE: token_reweight
+    APPLY_TO: [concepts]
+    TOKEN_SCORE: cosine
+    TOKEN_WEIGHT_ACT: softmax
+    DETACH_SEARCH: false
+    DETACH_FIELD: false
+    OUTPUT_MODE: vec
+    WRITEBACK_MODE: field_span
+    WRITEBACK_FIELDS: [concepts]
+    TARGET_CONDITION_ENABLE: true
+    TARGET_CONDITION_FIELDS: [concepts]
+    TARGET_SUPPORT_ACT: softmax
+    TARGET_SUPPORT_TAU: 0.07
+    TARGET_SUPPORT_TOPK: 8
+    TARGET_STATIC: true
+    DEBUG: false
+  QWEN_REFINE:
+    ENABLE: false
+    MODEL_PATH: '/rydata/jinliye/llmmodel/models--Qwen--Qwen2.5-VL-3B-Instruct/snapshots/1b989f2c63999d7344135894d3cfa8f494116743'
+    CACHE_PATH: '/rydata/jinliye/LanTracking/tools/qwen_refine_cache/tnllt_qwen_refine_interval50.json'
+    CACHE_ENABLE: true
+    CACHE_INTERVAL: 50
+    CACHE_MAX_GAP: 25
+    CACHE_USE_PROB: 0.5
+    TRIGGER_MODE: interval_and_low_conf
+    TRIGGER_INTERVAL: 8
+    LOW_CONF_TH: 0.45
+    MAX_CALLS_PER_SEQ: 10
+    UPDATE_FIELDS: [concepts]
+    KEEP_TARGET_FROZEN: true
+    INPUT_IMAGE: search
+    INPUT_HINTS_ENABLE: true
+    SYSTEM_PROMPT_VERSION: v2
+    OUTPUT_FORMAT: json
+    ALLOW_EMPTY_CONCEPT: true
+    ALLOW_EMPTY_BACKGROUND: true
+    MAX_FIELD_WORDS: 6
+    MAX_FIELD_GROWTH: 2.0
+    DROP_INVALID_OUTPUT: true
+    DEBUG: false
+  EXTRA_MERGER: false
+  HEAD:
+    NUM_CHANNELS: 256
+    TYPE: CENTER
+  PRETRAIN_FILE: DUTrack_Pretrained_256_full.pth.tar
+  RETURN_INTER: false
+TEST:
+  TEXT:
+    SOURCE: gt
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/tnllt_test_parsed_text_v2.json
+    UPDATE_POLICY: always
+    CLASS_TEMPLATE: 'a photo of {}'
+    DEBUG: false
+    CACHE_ENABLE: true
+    CACHE_PATH: /rydata/jinliye/LanTracking/output/test/qwencache/test/TNLLT/qwen_lora_strict437_r16_lr3e5_e12/tnllt_qwen_refine_test_full.json
+    CACHE_MAX_GAP: 50
+    CACHE_DEBUG: true
+  EPOCH: 30
+  MEMORY_THRESHOLD: 1000
+  SEARCH_FACTOR: 4.0
+  SEARCH_SIZE: 256
+  TEMPLATE_FACTOR: 2.0
+  TEMPLATE_NUMBER: 4
+  TEMPLATE_SIZE: 128
+TRAIN:
+  AMP: false
+  BACKBONE_MULTIPLIER: 0.1
+  BATCH_SIZE: 8
+  BBOX_TASK: true
+  DROP_PATH_RATE: 0.1
+  EPOCH: 32
+  GIOU_WEIGHT: 2.0
+  GRAD_CLIP_NORM: 0.1
+  L1_WEIGHT: 5.0
+  LR: 0.0001
+  LR_DROP_EPOCH: 20
+  NUM_WORKER: 10
+  OPTIMIZER: ADAMW
+  PRINT_INTERVAL: 50
+  SCHEDULER:
+    DECAY_RATE: 0.1
+    TYPE: step
+  VAL_EPOCH_INTERVAL: 2000000
+  WEIGHT_DECAY: 0.0001
+  TEXT_AUG:
+    ENABLE: false
+    DROP_PROB: 0.1
+    SHUFFLE_PROB: 0.1
+    CHAR_NOISE_PROB: 0.05
+    CASE_PERTURB_PROB: 0.05
+    PUNCT_PERTURB_PROB: 0.05
+    SYNONYM_PROB: 0.1
+    SYNONYM_PATH: '/media/amax/xiao_20T1/code/jly/Tracking_baseline/DUTrack-main/assets/synonyms.json'

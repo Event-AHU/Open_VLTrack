@@ -1,0 +1,171 @@
+DATA:
+  TNLLT:
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/tnllt_train_parsed_text_v2.json
+  TNL2K:
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/tnl2k_train_parsed_text_v1.json
+  OTB99LANG:
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/otb99lang_train_parsed_text_v1.json
+  MAX_SAMPLE_INTERVAL: 200
+  MEAN:
+  - 0.485
+  - 0.456
+  - 0.406
+  SEARCH:
+    CENTER_JITTER: 3.5
+    FACTOR: 4.0
+    NUMBER: 2
+    SCALE_JITTER: 0.5
+    SIZE: 256
+  STD:
+  - 0.229
+  - 0.224
+  - 0.225
+  TEMPLATE:
+    CENTER_JITTER: 0
+    FACTOR: 2.0
+    NUMBER: 3
+    SCALE_JITTER: 0
+    SIZE: 128
+  TRAIN:
+    DATASETS_NAME:
+      - TNLLT
+      - TNL2K
+      - OTB99LANG_train
+    DATASETS_RATIO:
+      - 1
+      - 1
+      - 1
+    SAMPLE_PER_EPOCH: 30000
+  VAL:
+    DATASETS_NAME:
+      - OTB99LANG_test
+    DATASETS_RATIO:
+      - 1
+    SAMPLE_PER_EPOCH: 2400
+MODEL:
+  BACKBONE:
+    ADD_CLS_TOKEN: true
+    ATTN_TYPE: concat
+    CE_KEEP_RATIO:
+    - 0.7
+    - 0.7
+    - 0.7
+    CE_LOC:
+    - 3
+    - 6
+    - 9
+    CE_TEMPLATE_RANGE: CTR_POINT
+    STRIDE: 16
+    TOP_K: 3
+    TYPE: itpn_base
+    BERT_DIR: '/rydata/jinliye/LanTracking/pretrained/bert'
+    BLIP_DIR: '/rydata/jinliye/LanTracking/pretrained/blip-image-captioning-base'
+  CAC:
+    ENABLE: false
+    APPLY_LAST_N: 0
+    LAYER_POLICY: first
+    APPLY_N: 1
+    LAMBDA: 0.5
+    QUERY: temporal
+    KEY: search
+    DELTA_CLAMP_MIN: 0.0
+    DETACH_PROTO: true
+    LANG_ENABLE: false
+    LANG_DETACH_VEC: false
+    LANG_WEIGHT_ACT: relu
+    LANG_TAU: 0.07
+    DEBUG: false
+    TEXT_MODE: raw_parsed
+    TEXT_FUSION_MODE: token_concat
+    MAX_TOTAL_TEXT_LEN: 32
+    PARSED_FIELDS: [target, concepts, background]
+    PARSED_JOIN: sep
+    PARSED_WEIGHT:
+      target: 1.0
+      concepts: 0.7
+      background: 0.3
+    RESIDUAL_ENABLE: false
+    RESIDUAL_WEIGHT: 1.0
+    DP_PARSER_CKPT: /rydata/jinliye/LanTracking/DPModel2/ckpt/best_model_epoch_273_uas_0.8729_las_0.8521.pth
+    DP_CACHE_DIR: /rydata/jinliye/treeTrack/Dependency Parser/dataset
+    PARSED_USE_SPACY: true
+    PARSED_SPACY_MODEL: en_core_web_sm
+    DP_EMBED_DIM: 300
+    DP_HIDDEN_DIM: 256
+    DP_LSTM_LAYERS: 3
+    DP_FFNN_DIM: 256
+    DP_DEVICE: cuda:0
+    PROTO_TARGET_WEIGHT: 0.0
+    PROTO_CONCEPT_WEIGHT: 0.0
+    PROTO_BG_WEIGHT: 0.0
+  TEXT_REFINE:
+    ENABLE: true
+    MODE: token_reweight
+    APPLY_TO: [concepts]
+    TOKEN_SCORE: cosine
+    TOKEN_WEIGHT_ACT: softmax
+    DETACH_SEARCH: false
+    DETACH_FIELD: false
+    OUTPUT_MODE: vec
+    WRITEBACK_MODE: field_span
+    WRITEBACK_FIELDS: [concepts]
+    TARGET_CONDITION_ENABLE: true
+    TARGET_CONDITION_FIELDS: [concepts]
+    TARGET_SUPPORT_ACT: softmax
+    TARGET_SUPPORT_TAU: 0.07
+    TARGET_SUPPORT_TOPK: 8
+    TARGET_STATIC: true
+    DEBUG: false
+  EXTRA_MERGER: false
+  HEAD:
+    NUM_CHANNELS: 256
+    TYPE: CENTER
+  PRETRAIN_FILE: /rydata/jinliye/LanTracking/pretrained_models/DUTrack_Pretrained_256_full.pth.tar
+  RETURN_INTER: false
+TEST:
+  TEXT:
+    SOURCE: gt
+    PARSED_TEXT_PATH: /rydata/jinliye/LanTracking/tools/otb99lang_test_parsed_text_v1.json
+    UPDATE_POLICY: always
+    CLASS_TEMPLATE: 'a photo of {}'
+    DEBUG: false
+    CACHE_ENABLE: true
+    CACHE_PATH: '/rydata/jinliye/LanTracking/output/test/qwencache/test/TNL2K/tnl2k_qwen_refine_test_mixed_r16_e5.json'
+    CACHE_MAX_GAP: 50
+    CACHE_DEBUG: false
+  EPOCH: 30
+  MEMORY_THRESHOLD: 1000
+  SEARCH_FACTOR: 4.0
+  SEARCH_SIZE: 256
+  TEMPLATE_FACTOR: 2.0
+  TEMPLATE_NUMBER: 4
+  TEMPLATE_SIZE: 128
+TRAIN:
+  AMP: false
+  BACKBONE_MULTIPLIER: 0.1
+  BATCH_SIZE: 8
+  BBOX_TASK: true
+  DROP_PATH_RATE: 0.1
+  EPOCH: 30
+  GIOU_WEIGHT: 2.0
+  GRAD_CLIP_NORM: 0.1
+  L1_WEIGHT: 5.0
+  LR: 0.0001
+  LR_DROP_EPOCH: 20
+  NUM_WORKER: 10
+  OPTIMIZER: ADAMW
+  PRINT_INTERVAL: 50
+  SCHEDULER:
+    DECAY_RATE: 0.1
+    TYPE: step
+  VAL_EPOCH_INTERVAL: 2000000
+  WEIGHT_DECAY: 0.0001
+  TEXT_AUG:
+    ENABLE: false
+    DROP_PROB: 0.1
+    SHUFFLE_PROB: 0.1
+    CHAR_NOISE_PROB: 0.05
+    CASE_PERTURB_PROB: 0.05
+    PUNCT_PERTURB_PROB: 0.05
+    SYNONYM_PROB: 0.1
+    SYNONYM_PATH: '/media/amax/xiao_20T1/code/jly/Tracking_baseline/DUTrack-main/assets/synonyms.json'
